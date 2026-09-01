@@ -1,0 +1,3 @@
+"""
+Shipping app initialization.
+"""
