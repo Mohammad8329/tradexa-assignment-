@@ -92,7 +92,8 @@ To run the automated test suite with verbose output:
 python manage.py test shipping.tests -v 2
 ```
 
-To view recorded test execution output, see [`TEST_OUTPUT.md`](TEST_OUTPUT.md).
+To view the full human-readable test case matrix and specifications, see [`TEST_CASES.md`](TEST_CASES.md).
+To view the raw recorded test execution output, see [`TEST_OUTPUT.md`](TEST_OUTPUT.md).
 
 ---
 
@@ -220,8 +221,9 @@ tradexa-assignment-/
 ├── manage.py
 ├── requirements.txt          # Django, DRF, django-jazzmin, whitenoise
 ├── README.md
-├── Progress.md               # AI development log & design rationale
+├── TEST_CASES.md             # Human-readable test case matrix & specifications
 ├── TEST_OUTPUT.md            # Raw terminal output from test suite
+├── Progress.md               # AI development log & design rationale
 ├── .gitignore
 ├── .github/
 │   └── workflows/

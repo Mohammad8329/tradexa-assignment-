@@ -80,7 +80,9 @@ Comprehensive test suites covering:
 - **`test_services.py`**: 10 distinct algorithmic scenarios (single item, rotation matching, dimension gates, weight gates, cost prioritization, tie breaking, unboxable items, empty orders, multi-box packing).
 - **`test_api.py`**: Product/Box/Order CRUD, order recommendation endpoints, and ad-hoc calculation endpoints.
 
-**Result**: 21/21 tests passing in 0.046s. Full terminal output saved in `TEST_OUTPUT.md`.
+**Result**: 21/21 tests passing in 0.165s.
+- Detailed human-readable specifications and matrix: [`TEST_CASES.md`](TEST_CASES.md).
+- Full raw terminal output: [`TEST_OUTPUT.md`](TEST_OUTPUT.md).
 
 ---
 
