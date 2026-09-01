@@ -64,11 +64,12 @@ The box selection logic is isolated in a pure service layer (`BoxRecommendationS
 - `GET /api/orders/{id}/recommend-box/` / `POST /api/orders/{id}/recommend-box/` — Run box recommendation for an existing order.
 - `POST /api/recommend-box/` — Ad-hoc recommendation endpoint accepting arbitrary JSON item manifests without requiring database persistence.
 
-### Django Admin (`shipping/admin.py`):
-- Custom admin for `Product`, `Box`, and `Order`.
-- Tabular inline for line items with real-time display of unit & total weights and volumes.
-- Color-coded packaging recommendation preview directly in the Order list view.
-- Detailed box-by-box breakdown and space/weight utilization indicators inside the Order detail view.
+### Django Admin & UI Customization (`shipping/admin.py` & Jazzmin):
+- Integrated `django-jazzmin` for modern AdminLTE / Bootswatch UI styling.
+- Configured `whitenoise` with compressed manifest storage and `STATIC_ROOT = BASE_DIR / 'staticfiles'` for self-contained, production-ready static file serving when `DEBUG = False`.
+- Custom admin for `Product`, `Box`, and `Order` with live recommendation badges and utilization calculations.
+- Dedicated standalone landing page template ([`templates/home.html`](file:///c:/Mohammad/project/tradexa-assignment-/templates/home.html)) with full vertical/horizontal viewport centering, unified purple accent palette, and a 3-step "How It Works" overview.
+- Custom themed 404 error page template ([`templates/404.html`](file:///c:/Mohammad/project/tradexa-assignment-/templates/404.html)) shown when non-existent endpoints are requested in production mode.
 
 ---
 
@@ -79,7 +80,7 @@ Comprehensive test suites covering:
 - **`test_services.py`**: 10 distinct algorithmic scenarios (single item, rotation matching, dimension gates, weight gates, cost prioritization, tie breaking, unboxable items, empty orders, multi-box packing).
 - **`test_api.py`**: Product/Box/Order CRUD, order recommendation endpoints, and ad-hoc calculation endpoints.
 
-**Result**: 21/21 tests passing in 0.080s. Full terminal output saved in `TEST_OUTPUT.md`.
+**Result**: 21/21 tests passing in 0.046s. Full terminal output saved in `TEST_OUTPUT.md`.
 
 ---
 

@@ -1,0 +1,280 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block title %}Shipping Box Recommendation Engine{% endblock %}
+
+{% block extrastyle %}
+<style>
+    /* Hide Jazzmin Admin Chrome */
+    .app-header, .app-sidebar, .app-footer, #jazzy-navbar, #jazzy-sidebar {
+        display: none !important;
+    }
+
+    /* Full-viewport vertical & horizontal centering */
+    html, body {
+        height: 100% !important;
+        min-height: 100vh !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: #12151e !important;
+    }
+
+    .app-wrapper {
+        min-height: 100vh !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 30px 20px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        background: transparent !important;
+        box-sizing: border-box !important;
+    }
+
+    .app-main {
+        margin: 0 auto !important;
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: 1100px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .app-content-header {
+        width: 100% !important;
+        padding: 0 0 2rem 0 !important;
+        text-align: center !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    .app-content {
+        width: 100% !important;
+        padding: 0 !important;
+    }
+
+    /* Custom Theme & Accent Colors */
+    :root {
+        --accent-purple: #6f42c1;
+        --accent-purple-hover: #59339d;
+        --accent-glow: rgba(111, 66, 193, 0.25);
+    }
+
+    .main-title {
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 2.35rem;
+        letter-spacing: -0.02em;
+        margin: 0 auto;
+        text-align: center !important;
+        width: 100%;
+        line-height: 1.25;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    .custom-card {
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-top: 4px solid var(--accent-purple) !important;
+        box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5);
+        background: #1e222d;
+        margin-bottom: 0;
+        width: 100%;
+    }
+
+    .custom-card .card-header {
+        background: transparent;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 1.5rem 2rem;
+    }
+
+    .custom-card .card-header h5 {
+        color: #f8fafc;
+        font-weight: 600;
+        font-size: 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .custom-card .card-body {
+        padding: 2.25rem 2rem;
+        color: #cbd5e1;
+        font-size: 1.08rem;
+        line-height: 1.7;
+    }
+
+    .buttons-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin: 1.75rem 0 2rem 0;
+    }
+
+    .btn-purple {
+        background-color: var(--accent-purple) !important;
+        border-color: var(--accent-purple) !important;
+        color: #ffffff !important;
+        font-weight: 600;
+        padding: 0.75rem 1.85rem;
+        font-size: 1rem;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .btn-purple:hover {
+        background-color: var(--accent-purple-hover) !important;
+        border-color: var(--accent-purple-hover) !important;
+        box-shadow: 0 4px 16px var(--accent-glow);
+        transform: translateY(-2px);
+    }
+
+    .btn-outline-custom {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        color: #e2e8f0 !important;
+        font-weight: 600;
+        padding: 0.75rem 1.85rem;
+        font-size: 1rem;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .btn-outline-custom:hover {
+        background-color: rgba(255, 255, 255, 0.12) !important;
+        border-color: rgba(255, 255, 255, 0.35) !important;
+        color: #ffffff !important;
+        transform: translateY(-2px);
+    }
+
+    /* How It Works Steps */
+    .steps-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        padding-top: 1.75rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    @media (max-width: 768px) {
+        .steps-container {
+            grid-template-columns: 1fr;
+            gap: 14px;
+        }
+    }
+
+    .step-item {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        padding: 22px 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .step-icon {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: var(--accent-glow);
+        color: #d8b4fe;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+        border: 1px solid rgba(111, 66, 193, 0.4);
+    }
+
+    .step-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #f1f5f9;
+        margin-bottom: 6px;
+    }
+
+    .step-desc {
+        font-size: 0.85rem;
+        color: #94a3b8;
+        line-height: 1.45;
+        margin: 0;
+    }
+</style>
+{% endblock %}
+
+{% block branding %}{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block content %}
+<div class="row w-100 m-0 justify-content-center">
+    <div class="col-12 p-0">
+        <div class="card custom-card">
+            <div class="card-header">
+                <h5 class="m-0">
+                    <i class="fas fa-warehouse" style="color: var(--accent-purple);"></i>
+                    Warehouse Packaging System
+                </h5>
+            </div>
+            <div class="card-body">
+                <h1 class="main-title" style="margin: 0 auto 1.5rem auto;">Shipping Box Recommendation Engine</h1>
+                <p class="text-center mb-0" style="font-size: 1.08rem; color: #cbd5e1; max-width: 800px; margin: 0 auto;">
+                    Calculates optimal shipping box selections based on product dimensions, 
+                    weight capacities, and 3D rotational geometry.
+                </p>
+
+                <div class="buttons-container">
+                    <a href="/admin/" class="btn btn-purple">
+                        <i class="fas fa-cog"></i> Go to Admin Dashboard
+                    </a>
+                    <a href="/api/" class="btn btn-outline-custom">
+                        <i class="fas fa-server"></i> View REST API
+                    </a>
+                </div>
+
+                <!-- How It Works Section -->
+                <div class="steps-container">
+                    <div class="step-item">
+                        <div class="step-icon">
+                            <i class="fas fa-ruler-combined"></i>
+                        </div>
+                        <div class="step-title">1. Item Dimensions</div>
+                        <p class="step-desc">Input length, width, height &amp; weight (g).</p>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-icon">
+                            <i class="fas fa-cube"></i>
+                        </div>
+                        <div class="step-title">2. 3D Fit Matching</div>
+                        <p class="step-desc">Tested against boxes with 3-axis rotation.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="step-title">3. Best Box Pick</div>
+                        <p class="step-desc">Smallest &amp; cheapest box recommended.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -13,12 +13,18 @@ A clean, robust Django & Django REST Framework application that calculates and r
   - Full CRUD for Products, Boxes, and Orders.
   - Dedicated endpoint `POST /api/orders/{id}/recommend-box/` for persisted orders.
   - Ad-hoc endpoint `POST /api/recommend-box/` for calculating recommendations on raw item payloads without saving to database.
-- **Interactive Django Admin**:
+- **Modern Django Admin UI (`django-jazzmin`)**:
+  - Customized Bootswatch / AdminLTE interface with dark mode and model icons.
   - Real-time packaging preview badges in the order list.
   - Deep-dive box breakdown with weight & volume capacity utilization percentages.
+- **Dedicated Homepage & Custom 404**:
+  - Viewport-centered landing page (`/`) with a 3-step visual "How It Works" workflow guide.
+  - Themed 404 error page (`templates/404.html`) for production routing.
+- **Production-Ready Static Asset Pipeline (`WhiteNoise`)**:
+  - Full static file serving with gzip/brotli compression enabled out of the box (`DEBUG = False`).
 - **Zero-Setup Database**: Configured with SQLite out of the box.
 - **100% Test Coverage for Core Engine**: 21 unit and integration tests covering models, services, rotation, multi-box packing, and API endpoints.
-- **Continuous Integration**: GitHub Actions CI workflow configured for automated testing.
+- **Continuous Integration**: GitHub Actions CI workflow configured for automated multi-version Python testing.
 
 ---
 
@@ -48,11 +54,14 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 3. Run Migrations & Seed Sample Data
+### 3. Run Migrations, Collect Static & Seed Sample Data
 
 ```bash
 # Apply migrations
 python manage.py migrate
+
+# Collect static assets for WhiteNoise
+python manage.py collectstatic --noinput
 
 # Populate sample products, boxes, and test orders
 python manage.py seed_sample_data
@@ -68,7 +77,10 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
-Open [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/) to explore the Django Admin interface.
+### 5. Access Points
+- **Homepage & Workflow Guide**: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+- **Admin Dashboard**: [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
+- **Browsable REST API**: [http://127.0.0.1:8000/api/](http://127.0.0.1:8000/api/)
 
 ---
 
@@ -206,7 +218,7 @@ Or reference existing product IDs directly:
 ```text
 tradexa-assignment-/
 ├── manage.py
-├── requirements.txt
+├── requirements.txt          # Django, DRF, django-jazzmin, whitenoise
 ├── README.md
 ├── Progress.md               # AI development log & design rationale
 ├── TEST_OUTPUT.md            # Raw terminal output from test suite
@@ -216,12 +228,16 @@ tradexa-assignment-/
 │       └── tests.yml         # GitHub Actions CI workflow
 ├── config/
 │   ├── __init__.py
-│   ├── settings.py
-│   ├── urls.py
+│   ├── settings.py           # Jazzmin, WhiteNoise, DRF, and SQLite config
+│   ├── urls.py               # Root URL router
 │   └── wsgi.py
+├── templates/
+│   ├── home.html             # Themed landing page & 3-step guide
+│   └── 404.html              # Custom themed 404 error page
+├── staticfiles/              # Collected static assets for WhiteNoise
 └── shipping/
     ├── __init__.py
-    ├── admin.py              # Django Admin custom interfaces
+    ├── admin.py              # Django Admin custom interfaces & packing previews
     ├── apps.py
     ├── models.py             # Product, Box, Order, OrderItem
     ├── serializers.py        # DRF serializers

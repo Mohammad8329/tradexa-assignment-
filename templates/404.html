@@ -1,0 +1,143 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block title %}404 - Page Not Found | Shipping Box Recommendation Engine{% endblock %}
+
+{% block extrastyle %}
+<style>
+    /* Hide Jazzmin Admin Chrome */
+    .app-header, .app-sidebar, .app-footer, #jazzy-navbar, #jazzy-sidebar {
+        display: none !important;
+    }
+
+    /* Force true viewport vertical & horizontal centering */
+    html, body {
+        height: 100% !important;
+        min-height: 100vh !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: #12151e !important;
+    }
+
+    .app-wrapper {
+        min-height: 100vh !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 30px 20px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        background: transparent !important;
+        box-sizing: border-box !important;
+    }
+
+    .app-main {
+        margin: 0 auto !important;
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: 600px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .app-content-header {
+        display: none !important;
+    }
+
+    .app-content {
+        width: 100% !important;
+        padding: 0 !important;
+    }
+
+    /* Custom Theme & Accent Colors */
+    :root {
+        --accent-purple: #6f42c1;
+        --accent-purple-hover: #59339d;
+        --accent-glow: rgba(111, 66, 193, 0.25);
+    }
+
+    .custom-card {
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-top: 4px solid var(--accent-purple) !important;
+        box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5);
+        background: #1e222d;
+        margin-bottom: 0;
+        width: 100%;
+        text-align: center;
+        padding: 3rem 2rem;
+    }
+
+    .error-code {
+        font-size: 6rem;
+        font-weight: 800;
+        color: var(--accent-purple);
+        line-height: 1;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 4px 16px var(--accent-glow);
+    }
+
+    .error-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #f8fafc;
+        margin-bottom: 1rem;
+    }
+    
+    .error-desc {
+        color: #94a3b8;
+        font-size: 1.05rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .btn-purple {
+        background-color: var(--accent-purple) !important;
+        border-color: var(--accent-purple) !important;
+        color: #ffffff !important;
+        font-weight: 600;
+        padding: 0.75rem 1.85rem;
+        font-size: 1rem;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s ease-in-out;
+        text-decoration: none;
+    }
+
+    .btn-purple:hover {
+        background-color: var(--accent-purple-hover) !important;
+        border-color: var(--accent-purple-hover) !important;
+        box-shadow: 0 4px 16px var(--accent-glow);
+        transform: translateY(-2px);
+        color: #ffffff !important;
+    }
+</style>
+{% endblock %}
+
+{% block branding %}{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block content %}
+<div class="row w-100 m-0 justify-content-center">
+    <div class="col-12 p-0">
+        <div class="card custom-card">
+            <div class="error-code">404</div>
+            <div class="error-title">Destination Unknown</div>
+            <div class="error-desc">
+                The page or package you are looking for has been misplaced in the warehouse and cannot be found.
+            </div>
+            
+            <div>
+                <a href="/" class="btn btn-purple">
+                    <i class="fas fa-home"></i> Return to Homepage
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
